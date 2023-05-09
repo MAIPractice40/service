@@ -10,6 +10,7 @@ packages = [{include = "service"}]
 python = "^3.10"
 django = "^4.2"
 psycopg2 = "^2.9.6"
+pydantic = {extras = ["dotenv"], version = "^1.10.7"}
 
 
 [build-system]
