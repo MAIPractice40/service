@@ -39,7 +39,8 @@ SECRET_KEY = "django-insecure-ir%q3zy0ws(y46-o5j2qg-5bc03^dnc0&nt_+%xb!v*$7*4b$g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1", 'localhost']
+
 
 
 # Application definition
@@ -99,7 +100,7 @@ DATABASES = {
     }
 }
 
-print(DATABASES)
+#print(DATABASES)
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -140,3 +141,6 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_REDIRECT_URL = "/home"
+LOGOUT_REDIRECT_URL = "/home"
