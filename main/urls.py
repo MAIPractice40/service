@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (
     SignUp, about, home, index, 
-    get_contract, add_contruct, update_contract, delete_contract,
+    get_contract, add_contract, update_contract, delete_contract,
     get_application, add_application, update_application, delete_application
 )
     
