@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from .forms import ApplicationForm, ContractForm
-from .models import Contract
+from .models import Contract, Application
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # !!!!!!! Надо добавить поле пользователь в модель Application!!!!
@@ -54,6 +54,36 @@ class ContractDetailView(LoginRequiredMixin, DetailView):
     login_url ="/accounts/login/"
     model= Contract
     template_name = "main/crud/contract_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if context['object'].user.id != self.request.user.id:
+            raise PermissionDenied
+        return context
+
+class CreateApplicationView(LoginRequiredMixin,CreateView):
+    login_url ="/accounts/login/"
+    success_url = reverse_lazy("application_create")
+    form_class = ContractForm
+    template_name = "main/crud/create_application.html"
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(CreateContractView, self).form_valid(form)
+    
+class ApplicationListView(LoginRequiredMixin,ListView):
+    login_url ="/accounts/login/"
+    model= Application
+    template_name = "main/crud/application_list.html"
+
+    def get_queryset(self):
+        return Application.objects.filter(user=self.request.user)
+    
+
+class ApplicationDetailView(LoginRequiredMixin, DetailView):
+    login_url ="/accounts/login/"
+    model= Application
+    template_name = "main/crud/application_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
