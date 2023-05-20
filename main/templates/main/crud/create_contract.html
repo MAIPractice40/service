@@ -1,12 +1,11 @@
 {% extends 'main/base.html' %}
 
 {% block content %}
-<h2>Register</h2>
+<h2>Create Contract</h2>
 
 <form method="post">
     {% csrf_token %}
     {{form}}
-    <input type="submit" value="Register">
+    <input type="submit" value="Create">
 </form>
-
 {% endblock %}
