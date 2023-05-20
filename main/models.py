@@ -5,7 +5,6 @@ from django.db import models
 
 class Application(models.Model):
     id = models.IntegerField(primary_key=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE)
     number = models.IntegerField()
     contract = models.ForeignKey('Contract', on_delete=models.CASCADE)
     date_of_contract = models.DateField()
