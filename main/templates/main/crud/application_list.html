@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>Applications</h1>
+<ul>
+    {% for application in object_list %}
+    <li>
+        <a href="{% url 'application_detail' application.pk %}">
+            <p>Name: {{application.name}}</p>
+            <p>Text: {{application.date_of_contract}}</p>
+        </a>
+    </li>
+    {% empty %}
+    <li>No applications yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

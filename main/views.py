@@ -64,12 +64,12 @@ class ContractDetailView(LoginRequiredMixin, DetailView):
 class CreateApplicationView(LoginRequiredMixin,CreateView):
     login_url ="/accounts/login/"
     success_url = reverse_lazy("application_create")
-    form_class = ContractForm
+    form_class = ApplicationForm
     template_name = "main/crud/create_application.html"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        return super(CreateContractView, self).form_valid(form)
+        return super(CreateApplicationView, self).form_valid(form)
     
 class ApplicationListView(LoginRequiredMixin,ListView):
     login_url ="/accounts/login/"

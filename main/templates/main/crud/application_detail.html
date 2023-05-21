@@ -1,0 +1,12 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<h1>{{ object.name }}</h1>
+<p>{{ object.text }}</p>
+<p>{{ object.date_of_contract }}</p>
+<p>{{ object.test_object }}</p>
+<p>{{ object.defined_characteristic }}</p>
+<p>Amount: {{ object.amount }}</p>
+<p>Reporter: {{ object.user }}</p>
+<p></p>
+{% endblock %}
