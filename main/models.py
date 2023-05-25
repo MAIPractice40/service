@@ -4,7 +4,7 @@ from django.db import models
 
 
 class Application(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE)
     number = models.IntegerField()
     contract = models.ForeignKey('Contract', on_delete=models.CASCADE)
@@ -21,3 +21,6 @@ class Contract(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     text = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.name
