@@ -73,20 +73,22 @@
     <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
         {{ object.text }}
     </div>
-
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.date_of_contract }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.test_object }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.defined_characteristic }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.test_object }}
+    </div>
+    <p>Amount: {{ object.amount }}</p>
+    <p>Reporter: {{ object.user }}</p>
 </div>
 
 {% endblock %}
 
-{% extends 'main/base.html' %}
 
-{% block content %}
-<h1>{{ object.name }}</h1>
-<p>{{ object.text }}</p>
-<p>{{ object.date_of_contract }}</p>
-<p>{{ object.test_object }}</p>
-<p>{{ object.defined_characteristic }}</p>
-<p>Amount: {{ object.amount }}</p>
-<p>Reporter: {{ object.user }}</p>
-<p></p>
-{% endblock %}
