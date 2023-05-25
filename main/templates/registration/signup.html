@@ -9,9 +9,44 @@ SignUp
 <a class="item" href="/home">
     Home
 </a>
-<a class="item" href="/contract">
-    Contracts
-</a>
+<div class="item">
+    <div class="ui pointing dropdown item">
+        Contracts
+        <i class="dropdown icon"></i>
+        <div class="menu">
+        <div class="item">
+            <a href="/contract/create">Create</a> 
+        </div>
+        <div class="item">
+            <a href="/contract/list">List</a> 
+        </div>
+        </div>
+    </div>  
+</div>   
+<div class="item">
+    <div class="ui pointing dropdown item">
+        Applications
+        <i class="dropdown icon"></i>
+        <div class="menu">
+        <div class="item">
+            <a href="/application/create">Create</a> 
+        </div>
+        <div class="item">
+            <a href="/application/list">List</a> 
+        </div>
+        </div>
+    </div>  
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+</div> 
+
+
+
+<div class="item">
+    Data
+</div>
+
 
 
 <div class="right menu">

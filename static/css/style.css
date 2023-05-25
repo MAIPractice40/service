@@ -17,3 +17,8 @@ form span {
     padding-left: 55vw;
     padding-top: 40vh;
 }
+
+ul {
+    display: inline-block;
+    text-align: left;
+}

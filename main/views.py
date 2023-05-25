@@ -16,10 +16,10 @@ from .models import Contract, Application
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def index(request):
-    return HttpResponse('This is index page')
+    return render(request,"main/home.html")
 
 def about(request):
-    return HttpResponse('This is about page')
+    return render(request,"main/home.html")
 
 def home(request):
     return render(request,"main/home.html")

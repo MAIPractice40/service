@@ -1,11 +1,80 @@
 {% extends 'main/base.html' %}
 
-{% block content %}
-<h2>Create Contract</h2>
+{% block menu %}
+<a class="item" href="/home">
+    Home
+</a>
+<div class="item">
+    <div class="ui pointing dropdown item">
+        Contracts
+        <i class="dropdown icon"></i>
+        <div class="menu">
+        <div class="item">
+            <a href="/contract/create">Create</a> 
+        </div>
+        <div class="item">
+            <a href="/contract/list">List</a> 
+        </div>
+        </div>
+    </div>  
+</div>   
+<div class="item">
+    <div class="ui pointing dropdown item">
+        Applications
+        <i class="dropdown icon"></i>
+        <div class="menu">
+        <div class="item">
+            <a href="/application/create">Create</a> 
+        </div>
+        <div class="item">
+            <a href="/application/list">List</a> 
+        </div>
+        </div>
+    </div>  
+    <script>
+        $('.ui.dropdown').dropdown();
+    </script>
+</div> 
 
-<form method="post">
+
+
+<div class="item">
+    Data
+</div>
+
+
+
+<div class="right menu">
+    <div class="item">
+    <div class="ui icon input">
+        <input type="text" placeholder="Search...">
+        <i class="search link icon"></i>
+    </div>
+    </div>
+
+    {% if user.is_authenticated %}
+    <a class="ui item" href="{% url 'logout' %}">Logout</a>
+
+    {% else %}
+    <a class="ui item" href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+    <a class="ui item" href="/signup">
+    SignUp
+    </a>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<h1 class="ui header" style="width: 12vw; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">Create Contract</h1>
+
+<form method="post" class="ui form" style="width: 30vw; margin-left: auto; margin-right: auto; margin-top: 2vh;">
     {% csrf_token %}
     {{form}}
-    <input type="submit" value="Create">
+    <input type="submit" class="ui primary button" value="Create" style="margin-top: 2.5vh;">
 </form>
+
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 {% endblock %}
