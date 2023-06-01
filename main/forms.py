@@ -6,7 +6,7 @@ from .models import Application, Contract
 class ContractForm(ModelForm):
     class Meta:
         model = Contract
-        fields=['name', 'text']
+        fields=['title', 'text', 'date_of_contract', 'data_file']
 
 class ApplicationForm(ModelForm):
     class Meta:

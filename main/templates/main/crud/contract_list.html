@@ -9,32 +9,32 @@
         Contracts
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/contract/create">Create</a> 
+            <div class="item">
+                <a href="/contract/create">Create</a>
+            </div>
+            <div class="item">
+                <a href="/contract/list">List</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/contract/list">List</a> 
-        </div>
-        </div>
-    </div>  
-</div>   
+    </div>
+</div>
 <div class="item">
     <div class="ui pointing dropdown item">
         Applications
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/application/create">Create</a> 
+            <div class="item">
+                <a href="/application/create">Create</a>
+            </div>
+            <div class="item">
+                <a href="/application/list">List</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/application/list">List</a> 
-        </div>
-        </div>
-    </div>  
+    </div>
     <script>
         $('.ui.dropdown').dropdown();
     </script>
-</div> 
+</div>
 
 <div class="item">
     Data
@@ -42,10 +42,10 @@
 
 <div class="right menu">
     <div class="item">
-    <div class="ui icon input">
-        <input type="text" placeholder="Search...">
-        <i class="search link icon"></i>
-    </div>
+        <div class="ui icon input">
+            <input type="text" placeholder="Search...">
+            <i class="search link icon"></i>
+        </div>
     </div>
 
     {% if user.is_authenticated %}
@@ -56,7 +56,7 @@
     {% endif %}
 
     <a class="ui item" href="/signup">
-    SignUp
+        SignUp
     </a>
 </div>
 {% endblock %}
@@ -68,24 +68,30 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
 {% if object_list %}
-<h1 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">Contracts</h1>
+<h1 class="ui header"
+    style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">Contracts
+</h1>
 <div class="ui list" style="margin-top: 3vh;">
     {% for contract in object_list %}
-        <div class="item" style="font-size: 20px; width: 50vw; margin-left: auto; margin-right: auto; margin-bottom: 1vh;">
-            <i class="file alternate outline icon"></i>
-          <div class="content"  style="word-wrap: break-word;">
-            <a class="header" href="{% url 'contract_detail' contract.pk %}">{{contract.name}}</a>
+    <div class="item" style="font-size: 20px; width: 50vw; margin-left: auto; margin-right: auto; margin-bottom: 1vh;">
+        <i class="file alternate outline icon"></i>
+        <div class="content" style="word-wrap: break-word;">
+            <a class="header" href="{% url 'contract_detail' contract.pk %}">{{contract.title}}</a>
             <div class="description" style="word-break: break-all;">{{contract.text}}</div>
-          </div>
         </div>
-       
+    </div>
+
     {% empty %}
-    <h2 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40vh; margin-bottom: 0;">No contracts yet</h2>
+    <h2 class="ui header"
+        style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40vh; margin-bottom: 0;">No
+        contracts yet</h2>
     {% endfor %}
 
 </div>
 {% else %}
-<h2 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40vh; margin-bottom: 0;">No contracts yet</h2>
+<h2 class="ui header"
+    style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40vh; margin-bottom: 0;">No contracts
+    yet</h2>
 {% endif %}
 
 {% endblock %}

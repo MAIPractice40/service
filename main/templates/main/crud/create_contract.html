@@ -9,32 +9,32 @@
         Contracts
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/contract/create">Create</a> 
+            <div class="item">
+                <a href="/contract/create">Create</a>
+            </div>
+            <div class="item">
+                <a href="/contract/list">List</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/contract/list">List</a> 
-        </div>
-        </div>
-    </div>  
-</div>   
+    </div>
+</div>
 <div class="item">
     <div class="ui pointing dropdown item">
         Applications
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/application/create">Create</a> 
+            <div class="item">
+                <a href="/application/create">Create</a>
+            </div>
+            <div class="item">
+                <a href="/application/list">List</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/application/list">List</a> 
-        </div>
-        </div>
-    </div>  
+    </div>
     <script>
         $('.ui.dropdown').dropdown();
     </script>
-</div> 
+</div>
 
 
 
@@ -46,10 +46,10 @@
 
 <div class="right menu">
     <div class="item">
-    <div class="ui icon input">
-        <input type="text" placeholder="Search...">
-        <i class="search link icon"></i>
-    </div>
+        <div class="ui icon input">
+            <input type="text" placeholder="Search...">
+            <i class="search link icon"></i>
+        </div>
     </div>
 
     {% if user.is_authenticated %}
@@ -60,16 +60,18 @@
     {% endif %}
 
     <a class="ui item" href="/signup">
-    SignUp
+        SignUp
     </a>
 </div>
 {% endblock %}
 
 
 {% block content %}
-<h1 class="ui header" style="width: 15vw; margin-left: auto; margin-right: auto; margin-top: 20vh; margin-bottom: 0;">Create Contract</h1>
+<h1 class="ui header" style="width: 15vw; margin-left: auto; margin-right: auto; margin-top: 20vh; margin-bottom: 0;">
+    Create Contract</h1>
 
-<form method="post" class="ui form" style="width: 30vw; margin-left: auto; margin-right: auto; margin-top: 2vh;">
+<form method="post" class="ui form" style="width: 30vw; margin-left: auto; margin-right: auto; margin-top: 2vh;"
+    enctype="multipart/form-data">
     {% csrf_token %}
     {{form}}
     <input type="submit" class="ui primary button" value="Create" style="margin-top: 2.5vh;">

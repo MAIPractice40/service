@@ -9,32 +9,32 @@
         Contracts
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/contract/create">Create</a> 
+            <div class="item">
+                <a href="/contract/create">Create</a>
+            </div>
+            <div class="item">
+                <a href="/contract/list">List</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/contract/list">List</a> 
-        </div>
-        </div>
-    </div>  
-</div>   
+    </div>
+</div>
 <div class="item">
     <div class="ui pointing dropdown item">
         Applications
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/application/create">Create</a> 
+            <div class="item">
+                <a href="/application/create">Create</a>
+            </div>
+            <div class="item">
+                <a href="/application/list">List</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/application/list">List</a> 
-        </div>
-        </div>
-    </div>  
+    </div>
     <script>
         $('.ui.dropdown').dropdown();
     </script>
-</div> 
+</div>
 
 <div class="item">
     Data
@@ -42,10 +42,10 @@
 
 <div class="right menu">
     <div class="item">
-    <div class="ui icon input">
-        <input type="text" placeholder="Search...">
-        <i class="search link icon"></i>
-    </div>
+        <div class="ui icon input">
+            <input type="text" placeholder="Search...">
+            <i class="search link icon"></i>
+        </div>
     </div>
 
     {% if user.is_authenticated %}
@@ -56,21 +56,24 @@
     {% endif %}
 
     <a class="ui item" href="/signup">
-    SignUp
+        SignUp
     </a>
 </div>
 {% endblock %}
 
 {% block content %}
-<h1 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">
-    {{ object.name }}
+<h1 class="ui header"
+    style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">
+    {{ object.title }}
 </h1>
 <div class="ui relaxed items">
-    <h3 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 4vh; margin-bottom: 0;">
+    <h3 class="ui header"
+        style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 4vh; margin-bottom: 0;">
         {{ object.user }}
     </h3>
 
-    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+    <div class="middle aligned content"
+        style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
         {{ object.text }}
     </div>
 
