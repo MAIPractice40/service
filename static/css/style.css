@@ -2,6 +2,23 @@ h1 {
     color: blue;
 }
 
-form {
-    background-color: brown;
+form span {
+    display: none;
+}
+
+.background {
+    height: 94.9vh;
+    background-image: url(./main.jpg);
+    background-position-y: center;
+    background-size: cover;
+}
+
+.homepage_text {
+    padding-left: 55vw;
+    padding-top: 40vh;
+}
+
+ul {
+    display: inline-block;
+    text-align: left;
 }

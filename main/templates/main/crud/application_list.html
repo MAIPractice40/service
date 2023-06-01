@@ -36,13 +36,9 @@
     </script>
 </div> 
 
-
-
 <div class="item">
     Data
 </div>
-
-
 
 <div class="right menu">
     <div class="item">
@@ -67,14 +63,30 @@
 
 
 {% block content %}
-<h1 class="ui header" style="width: 15vw; margin-left: auto; margin-right: auto; margin-top: 20vh; margin-bottom: 0;">Create Contract</h1>
-
-<form method="post" class="ui form" style="width: 30vw; margin-left: auto; margin-right: auto; margin-top: 2vh;">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" class="ui primary button" value="Create" style="margin-top: 2.5vh;">
-</form>
 
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
+
+{% if object_list %}
+<h1 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">Applications</h1>
+<div class="ui list" style="margin-top: 3vh;">
+    {% for application in object_list %}
+        <div class="item" style="font-size: 20px; width: 50vw; margin-left: auto; margin-right: auto; margin-bottom: 1vh;">
+            <i class="file alternate outline icon"></i>
+          <div class="content"  style="word-wrap: break-word;">
+            <a class="header" href="{% url 'application_detail' application.pk %}">{{application.number}}</a>
+            <div class="description" style="word-break: break-all;">{{application.date_of_contract}}</div>
+          </div>
+        </div>
+    {% empty %}
+    <h2 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40vh; margin-bottom: 0;">No application yet</h2>
+    {% endfor %}
+
+</div>
+{% else %}
+<h2 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 40vh; margin-bottom: 0;">No application yet</h2>
+{% endif %}
+
 {% endblock %}
+
+

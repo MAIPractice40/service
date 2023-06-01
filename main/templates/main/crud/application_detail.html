@@ -36,13 +36,9 @@
     </script>
 </div> 
 
-
-
 <div class="item">
     Data
 </div>
-
-
 
 <div class="right menu">
     <div class="item">
@@ -65,16 +61,34 @@
 </div>
 {% endblock %}
 
-
 {% block content %}
-<h1 class="ui header" style="width: 15vw; margin-left: auto; margin-right: auto; margin-top: 20vh; margin-bottom: 0;">Create Contract</h1>
+<h1 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 25vh; margin-bottom: 0;">
+    {{ object.name }}
+</h1>
+<div class="ui relaxed items">
+    <h3 class="ui header" style="text-align: center; margin-left: auto; margin-right: auto; margin-top: 4vh; margin-bottom: 0;">
+        {{ object.user }}
+    </h3>
 
-<form method="post" class="ui form" style="width: 30vw; margin-left: auto; margin-right: auto; margin-top: 2vh;">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" class="ui primary button" value="Create" style="margin-top: 2.5vh;">
-</form>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.text }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.date_of_contract }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.test_object }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.defined_characteristic }}
+    </div>
+    <div class="middle aligned content" style="text-align: start; width: 45%; margin-right:auto; margin-left:auto; font-size: large;">
+        {{ object.test_object }}
+    </div>
+    <p>Amount: {{ object.amount }}</p>
+    <p>Reporter: {{ object.user }}</p>
+</div>
 
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 {% endblock %}
+
+
