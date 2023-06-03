@@ -1,4 +1,6 @@
 from io import BytesIO
+from os import listdir
+from os.path import isfile, join
 
 import dash
 import dash_core_components as dcc
@@ -15,8 +17,10 @@ from django_plotly_dash import DjangoDash
 from plotly.subplots import make_subplots
 from scipy.stats import norm
 
+FILENAMES = [f for f in listdir(".") if isfile(join(".", f))]
+print(FILENAMES)
 # Загрузка исходных данных для работы .
-data = pd.read_excel("Копия ДКК А500С за 2020 г. УГМК-Сталь.xlsx")
+data = pd.read_excel('Копия ДКК А500С за 2020 г. УГМК-Сталь.xlsx')
 
 # Выбираем из таблицы индексы для фильтрации и назначаем тип категории.
 data["Марка стали"] = data["Марка стали"].astype("category")
@@ -25,9 +29,9 @@ steelgrade = data["Марка стали"].drop_duplicates().tolist()
 steelsize = data["Профиль / размер"].drop_duplicates().tolist()
 data = data.set_index(["Марка стали", "Профиль / размер"])
 
-steelgrade_opts = [{"label": i, "value": i} for i in steelgrade]
-steelsize_opts = [{"label": i, "value": i} for i in steelsize]
-
+steelgrade_opts = []# [{"label": i, "value": i} for i in steelgrade]
+steelsize_opts =[]# [{"label": i, "value": i} for i in steelsize]
+files = [{"label": i, "value": i} for i in FILENAMES]
 
 def test_shapiro(df):
     stats1, p = scipy.stats.shapiro(df)
@@ -85,6 +89,19 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
+                html.Div(
+                    children=[
+                        html.Div(
+                            children="Выберите файл", className="menu-title"
+                        ),
+                        dcc.Dropdown(
+                            id="files",
+                            options=files,
+                            value=files[0],
+                            clearable=False,
+                        ),
+                    ],
+                ),
                 html.Div(
                     children=[
                         html.Div(
@@ -245,12 +262,27 @@ app.layout = html.Div(
     style={"columnCount": 2},
 )
 
+
 # От выброра марки будут зависить размеры,которые можно выброть, как в датасете
-@app.callback(Output("steelsize_opts", "options"), [Input("steelgrade_opts", "value")])
+@app.callback([Output("steelsize_opts", "options"), Output("steelgrade_opts", "options")], [Input("files", "value")])
 def update_dropdown(X):
-    steelsize = data.xs(X).index.drop_duplicates().tolist()
+    print(X)
+    if isinstance(X, str):
+        data = pd.read_excel(X)
+    else:
+        data = pd.read_excel(X['value'])
+        X = X['value']
+# Выбираем из таблицы индексы для фильтрации и назначаем тип категории.
+    data["Марка стали"] = data["Марка стали"].astype("category")
+    data["Профиль / размер"] = data["Профиль / размер"].astype("category")
+    steelgrade = data["Марка стали"].drop_duplicates().tolist()
+    steelsize = data["Профиль / размер"].drop_duplicates().tolist()
+    data = data.set_index(["Марка стали", "Профиль / размер"])
+    steelgrade_opts = [{"label": i, "value": i} for i in steelgrade]
     steelsize_opts = [{"label": i, "value": i} for i in steelsize]
-    return steelsize_opts
+    # steelsize = data.xs(X).index.drop_duplicates().tolist()
+    # steelsize_opts = [{"label": i, "value": i} for i in steelsize]
+    return steelsize_opts, steelgrade_opts
 
 
 # От выбранных пунктов в чек-листе будет зависить отображенные на странице данные
