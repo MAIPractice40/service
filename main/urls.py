@@ -1,9 +1,10 @@
 from django.urls import path
 
-from .views import (ContractDetailView, ContractListView, CreateContractView,
-                    SignUp, 
-                    ApplicationDetailView, ApplicationListView, CreateApplicationView,
-                    index, about, home)
+from .dash_apps import app1
+from .views import (ApplicationDetailView, ApplicationListView,
+                    ContractDetailView, ContractListView,
+                    CreateApplicationView, CreateContractView, SignUp, about,
+                    dash_demo, home, index)
 
 urlpatterns = [
     path('', index),
@@ -16,4 +17,5 @@ urlpatterns = [
     path('application/create', CreateApplicationView.as_view(), name='application_create'),
     path('application/list', ApplicationListView.as_view(), name='application_list'),
     path('application/list/<int:pk>', ApplicationDetailView.as_view(), name='application_detail'),
+    path('app1/', dash_demo)
 ]

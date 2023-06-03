@@ -22,3 +22,7 @@ ul {
     display: inline-block;
     text-align: left;
 }
+
+div.plotly div {
+    height: 100%
+}

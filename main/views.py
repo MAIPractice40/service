@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 
 from .forms import ApplicationForm, ContractForm
-from .models import Contract, Application
+from .models import Application, Contract
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # !!!!!!! Надо добавить поле пользователь в модель Application!!!!
@@ -70,7 +70,7 @@ class CreateApplicationView(LoginRequiredMixin,CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(CreateApplicationView, self).form_valid(form)
-    
+
 class ApplicationListView(LoginRequiredMixin,ListView):
     login_url ="/accounts/login/"
     model= Application
@@ -78,7 +78,7 @@ class ApplicationListView(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         return Application.objects.filter(user=self.request.user)
-    
+
 
 class ApplicationDetailView(LoginRequiredMixin, DetailView):
     login_url ="/accounts/login/"
@@ -90,3 +90,6 @@ class ApplicationDetailView(LoginRequiredMixin, DetailView):
         if context['object'].user.id != self.request.user.id:
             raise PermissionDenied
         return context
+
+def dash_demo(request):
+    return render(request, 'dashreporting/dash.html')
