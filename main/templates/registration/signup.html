@@ -23,28 +23,15 @@ SignUp
         </div>
     </div>  
 </div>   
-<div class="item">
-    <div class="ui pointing dropdown item">
-        Applications
-        <i class="dropdown icon"></i>
-        <div class="menu">
-        <div class="item">
-            <a href="/application/create">Create</a> 
-        </div>
-        <div class="item">
-            <a href="/application/list">List</a> 
-        </div>
-        </div>
-    </div>  
-    <script>
-        $('.ui.dropdown').dropdown();
-    </script>
-</div> 
 
+
+<script>
+    $('.ui.dropdown').dropdown();
+</script>
 
 
 <div class="item">
-    Data
+    <a href="/app1/" class="ui item" >Dash</a>
 </div>
 
 
@@ -64,9 +51,7 @@ SignUp
     <a class="ui item" href="{% url 'login' %}">Login</a>
     {% endif %}
 
-    <a class="ui item" href="/signup">
-    SignUp
-    </a>
+
 </div>
 {% endblock %}
 

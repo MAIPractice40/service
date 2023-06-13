@@ -23,6 +23,6 @@ ul {
     text-align: left;
 }
 
-div.plotly div {
-    height: 100%
+.plotly {
+    height: 100vh;
 }
