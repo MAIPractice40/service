@@ -2,7 +2,9 @@ from io import BytesIO
 from os import listdir
 from os.path import isfile, join
 
+from dash import dcc
 import dash
+from dash import html
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
@@ -64,7 +66,7 @@ external_stylesheets = [
         "href": "https://fonts.googleapis.com/css2?"
         "family=Lato:wght@400;700&display=swap",
         "rel": "stylesheet",
-
+        "height" : "100%",
     },
 ]
 app = DjangoDash('Stats', external_stylesheets=external_stylesheets)
@@ -260,7 +262,7 @@ app.layout = html.Div(
             },
         ),
     ],
-    style={"columnCount": 2},
+    style={"columnCount": 2, 'height': '100vh', "position" : "relative"}
 )
 
 
