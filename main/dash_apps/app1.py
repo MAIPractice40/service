@@ -2,9 +2,7 @@ from io import BytesIO
 from os import listdir
 from os.path import isfile, join
 
-from dash import dcc
 import dash
-from dash import html
 import dash_core_components as dcc
 import dash_html_components as html
 import numpy as np
@@ -14,13 +12,15 @@ import plotly.express as px
 import plotly.graph_objs as go
 import scipy
 import seaborn as sns
+from dash import dcc, html
 from dash.dependencies import Input, Output
 from django_plotly_dash import DjangoDash
 from plotly.subplots import make_subplots
 from scipy.stats import norm
 
-FILENAMES = [f for f in listdir(".") if isfile(join(".", f))]
+FILENAMES = [f for f in listdir("./media/uploads") if isfile(join("./media/uploads", f))]
 print(FILENAMES)
+
 # Загрузка исходных данных для работы .
 data = pd.read_excel('Копия ДКК А500С за 2020 г. УГМК-Сталь.xlsx')
 
@@ -31,9 +31,9 @@ steelgrade = data["Марка стали"].drop_duplicates().tolist()
 steelsize = data["Профиль / размер"].drop_duplicates().tolist()
 data = data.set_index(["Марка стали", "Профиль / размер"])
 
-steelgrade_opts = []# [{"label": i, "value": i} for i in steelgrade]
-steelsize_opts =[]# [{"label": i, "value": i} for i in steelsize]
-files = [{"label": i, "value": i} for i in FILENAMES]
+steelgrade_opts = []
+steelsize_opts =[]
+files = [{"label": str(i), "value": str(i)} for i in  [f for f in listdir("./media/uploads") if isfile(join("./media/uploads", f))]]
 
 def test_shapiro(df):
     stats1, p = scipy.stats.shapiro(df)
@@ -69,205 +69,213 @@ external_stylesheets = [
         "height" : "100%",
     },
 ]
-app = DjangoDash('Stats', external_stylesheets=external_stylesheets)
 
-app.layout = html.Div(
-    children=[
-        html.Div(
-            children=[
-                html.H1(
-                    children="Оценка качества арматуры по механическим свойствам",
-                    className="header-title",
-                ),
-            ],
-            style={
-                "background-color": "#FFFFFF",
-                "position": "absolute",
-                "left": "10%",
-                "height": "288px",
-                "width": "1264px",
-                "padding": "16px 0 0 0",
-                "text-align": "center",
-            },
-        ),
-        html.Div(
-            children=[
-                html.Div(
-                    children=[
-                        html.Div(
-                            children="Выберите файл", className="menu-title"
-                        ),
-                        dcc.Dropdown(
-                            id="files",
-                            options=files,
-                            value=files[0],
-                            clearable=False,
-                        ),
-                    ],
-                ),
-                html.Div(
-                    children=[
-                        html.Div(
-                            children="Выберите марку стали", className="menu-title"
-                        ),
-                        dcc.Dropdown(
-                            id="steelgrade_opts",
-                            options=steelgrade_opts,
-                            value=steelgrade[0],
-                            clearable=False,
-                        ),
-                    ],
-                ),
-                html.Div(
-                    children=[
-                        html.Div(
-                            children="Выберите профиль / размер арматуры",
-                            className="menu-title",
-                        ),
-                        dcc.Dropdown(
-                            id="steelsize_opts",
-                            options=steelsize_opts,
-                            value=steelsize[0],
-                        ),
-                    ],
-                ),
-            ],
-            style={
-                "position": "absolute",
-                "left": "10%",
-                "top": "15%",
-                "height": "288px",
-                "width": "1264px",
-                "justify-content": "center",
-            },
-        ),
-        html.Div(
-            id="attention",
-            style={
-                "position": "absolute",
-                "left": "10%",
-                "top": "35%",
-                "width": "1264px",
-            },
-        ),
-        html.Div(
-            children=[
-                dcc.Graph(id="graph_gist", config={"displayModeBar": False}),
-            ],
-            style={
-                "position": "absolute",
-                "left": "10%",
-                "top": "40%",
-                "width": "1264px",
-                "justify-content": "center",
-            },
-        ),
-        html.Div(
-            children=[
-                html.H4(children="Оценка характера распределения:"),
-                html.Table(
-                    # Заголовок
-                    [
-                        html.Tr(
-                            children=[
-                                html.Th(
-                                    ["Характеристика"],
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Th(
-                                    ["Критерий Пирсона"],
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Th(
-                                    ["Критерий Колмогорова-Смирнова"],
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Th(
-                                    ["Критерий Шапиро-Уилка"],
-                                    style={"border": "1px solid #000"},
-                                ),
-                            ]
-                        )
-                    ]
-                    +
-                    # Тело таблицы
-                    [
-                        html.Tr(
-                            [
-                                html.Td(
-                                    "Предел текучести",
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Td(id="t00", style={"border": "1px solid #000"}),
-                                html.Td(id="t01", style={"border": "1px solid #000"}),
-                                html.Td(id="t02", style={"border": "1px solid #000"}),
-                            ]
-                        ),
-                        html.Tr(
-                            [
-                                html.Td(
-                                    "Временное сопротивление",
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Td(id="t10", style={"border": "1px solid #000"}),
-                                html.Td(id="t11", style={"border": "1px solid #000"}),
-                                html.Td(id="t12", style={"border": "1px solid #000"}),
-                            ]
-                        ),
-                        html.Tr(
-                            [
-                                html.Td(
-                                    "Относительное удлинение",
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Td(id="t20", style={"border": "1px solid #000"}),
-                                html.Td(id="t21", style={"border": "1px solid #000"}),
-                                html.Td(id="t22", style={"border": "1px solid #000"}),
-                            ]
-                        ),
-                        html.Tr(
-                            [
-                                html.Td("Относительное равномерное удлинение"),
-                                html.Td(id="t30", style={"border": "1px solid #000"}),
-                                html.Td(id="t31", style={"border": "1px solid #000"}),
-                                html.Td(id="t32", style={"border": "1px solid #000"}),
-                            ]
-                        ),
-                        html.Tr(
-                            [
-                                html.Td(
-                                    "Относительная площадь смятия поперечных рёбер",
-                                    style={"border": "1px solid #000"},
-                                ),
-                                html.Td(id="t40", style={"border": "1px solid #000"}),
-                                html.Td(id="t41", style={"border": "1px solid #000"}),
-                                html.Td(id="t42", style={"border": "1px solid #000"}),
-                            ]
-                        ),
-                    ],
-                    style={
-                        "border-collapse": "collapse",
-                        "width": "1264px",
-                        "text-align": "center",
-                        "border": "1px solid #000",
-                    },
-                ),
-            ],
-            style={
-                "position": "absolute",
-                "left": "10%",
-                "top": "95%",
-                "width": "1264px",
-                "justify-content": "center",
-            },
-        ),
-    ],
-    style={"columnCount": 2, 'height': '100vh', "position" : "relative"}
-)
+app = DjangoDash('Stats', external_stylesheets=external_stylesheets)
+def serve_layout():
+    layout =  html.Div(
+        children=[
+            html.Div(
+                children=[
+                    html.H1(
+                        children="Оценка качества арматуры по механическим свойствам",
+                        className="header-title",
+                    ),
+                ],
+                style={
+                    "background-color": "#FFFFFF",
+                # "position": "absolute",
+                # "left": "10%",
+                # "height": "288px",
+                    "width": "1264px",
+                    "padding": "16px 0 0 0",
+                    "text-align": "center",
+                },
+            ),
+            html.Div(
+                children=[
+                    html.Div(
+                        children=[
+                            html.Div(
+                                children="Выберите файл", className="menu-title"
+                            ),
+                            dcc.Dropdown(
+                                id="files",
+                                options=[{"label": str(i), "value": str(i)} for i in  [f for f in listdir("./media/uploads") if isfile(join("./media/uploads", f))]],
+                                value="Копия ДКК А500С за 2020 г. УГМК-Сталь.xlsx",
+                                clearable=False,
+                            ),
+                        ],
+                    ),
+                    html.Div(
+                        children=[
+                            html.Div(
+                                children="Выберите марку стали", className="menu-title"
+                            ),
+                            dcc.Dropdown(
+                                id="steelgrade_opts",
+                                options=steelgrade_opts,
+                                value=steelgrade[0],
+                                clearable=False,
+                            ),
+                        ],
+                    ),
+                    html.Div(
+                        children=[
+                            html.Div(
+                                children="Выберите профиль / размер арматуры",
+                                className="menu-title",
+                            ),
+                            dcc.Dropdown(
+                                id="steelsize_opts",
+                                options=steelsize_opts,
+                                value=steelsize[0],
+                            ),
+                        ],
+                    ),
+                ],
+                style={
+                #   "position": "absolute",
+                #   "left": "10%",
+                #   "top": "15%",
+                #   "height": "288px",
+                    "width": "1264px",
+                #   "justify-content": "center",
+                },
+            ),
+            html.Div(
+                id="attention",
+                style={
+                #   "position": "absolute",
+                #   "left": "10%",
+                #   "top": "35%",
+                    "width": "1264px",
+                },
+            ),
+            html.Div(
+                children=[
+                    dcc.Graph(id="graph_gist", config={"displayModeBar": False}),
+                ],
+                style={
+                #   "position": "absolute",
+                #   "left": "10%",
+                #   "top": "40%",
+                    "width": "1264px",
+                #   "justify-content": "center",
+                },
+            ),
+            html.Div(
+                children=[
+                    html.H4(children="Оценка характера распределения:"),
+                    html.Table(
+                        # Заголовок
+                        [
+                            html.Tr(
+                                children=[
+                                    html.Th(
+                                        ["Характеристика"],
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Th(
+                                        ["Критерий Пирсона"],
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Th(
+                                        ["Критерий Колмогорова-Смирнова"],
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Th(
+                                        ["Критерий Шапиро-Уилка"],
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                ]
+                            )
+                        ]
+                        +
+                        # Тело таблицы
+                        [
+                            html.Tr(
+                                [
+                                    html.Td(
+                                        "Предел текучести",
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Td(id="t00", style={"border": "1px solid #000"}),
+                                    html.Td(id="t01", style={"border": "1px solid #000"}),
+                                    html.Td(id="t02", style={"border": "1px solid #000"}),
+                                ]
+                            ),
+                            html.Tr(
+                                [
+                                    html.Td(
+                                        "Временное сопротивление",
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Td(id="t10", style={"border": "1px solid #000"}),
+                                    html.Td(id="t11", style={"border": "1px solid #000"}),
+                                    html.Td(id="t12", style={"border": "1px solid #000"}),
+                                ]
+                            ),
+                            html.Tr(
+                                [
+                                    html.Td(
+                                        "Относительное удлинение",
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Td(id="t20", style={"border": "1px solid #000"}),
+                                    html.Td(id="t21", style={"border": "1px solid #000"}),
+                                    html.Td(id="t22", style={"border": "1px solid #000"}),
+                                ]
+                            ),
+                            html.Tr(
+                                [
+                                    html.Td("Относительное равномерное удлинение"),
+                                    html.Td(id="t30", style={"border": "1px solid #000"}),
+                                    html.Td(id="t31", style={"border": "1px solid #000"}),
+                                    html.Td(id="t32", style={"border": "1px solid #000"}),
+                                ]
+                            ),
+                            html.Tr(
+                                [
+                                    html.Td(
+                                        "Относительная площадь смятия поперечных рёбер",
+                                        style={"border": "1px solid #000"},
+                                    ),
+                                    html.Td(id="t40", style={"border": "1px solid #000"}),
+                                    html.Td(id="t41", style={"border": "1px solid #000"}),
+                                    html.Td(id="t42", style={"border": "1px solid #000"}),
+                                ]
+                            ),
+                        ],
+                        style={
+                            "border-collapse": "collapse",
+                            "width": "1264px",
+                            "text-align": "center",
+                            "border": "1px solid #000",
+                        },
+                    ),
+                ],
+                style={
+                #   "position": "absolute",
+                #   "left": "10%",
+                #   "top": "95%",
+                    "width": "1264px",
+                #   "justify-content": "center",
+                },
+            ),
+        ],
+        style = {
+            #'position': 'absolute',
+                            #'left': '10%',
+                            #'top': '95%',
+                            'width': '1264px',
+                            'justify-content': 'center'}
+    )
+    return layout
+app.layout = serve_layout
 
 
 # От выброра марки будут зависить размеры,которые можно выброть, как в датасете
-@app.callback([Output("steelsize_opts", "options"), Output("steelgrade_opts", "options")], [Input("files", "value")])
+@app.callback([Output("steelgrade_opts", "options"),Output("steelgrade_opts", "value")], [Input("files", "value")])
 def update_dropdown(X):
     print(X)
     if isinstance(X, str):
@@ -282,13 +290,30 @@ def update_dropdown(X):
     steelsize = data["Профиль / размер"].drop_duplicates().tolist()
     data = data.set_index(["Марка стали", "Профиль / размер"])
     steelgrade_opts = [{"label": i, "value": i} for i in steelgrade]
-    steelsize_opts = [{"label": i, "value": i} for i in steelsize]
-    # steelsize = data.xs(X).index.drop_duplicates().tolist()
-    # steelsize_opts = [{"label": i, "value": i} for i in steelsize]
-    return steelsize_opts, steelgrade_opts
+
+    return steelgrade_opts,steelgrade[0]
 
 
 # От выбранных пунктов в чек-листе будет зависить отображенные на странице данные
+@app.callback([Output('steelsize_opts', 'options'),
+              Output('steelsize_opts', 'value')],
+             [Input('steelgrade_opts', 'value'),
+              Input("files", "value")])
+def update_dropdown(grade,X):
+    if isinstance(X, str):
+        data = pd.read_excel(X)
+    else:
+        data = pd.read_excel(X['value'])
+        X = X['value']
+    data["Марка стали"] = data["Марка стали"].astype("category")
+    data["Профиль / размер"] = data["Профиль / размер"].astype("category")
+    steelgrade = data["Марка стали"].drop_duplicates().tolist()
+    steelsize = data["Профиль / размер"].drop_duplicates().tolist()
+    data = data.set_index(["Марка стали", "Профиль / размер"])
+    steelsize=data.xs(grade).index.drop_duplicates().tolist()
+    steelsize_opts=[{'label' : i, 'value' : i} for i in steelsize]
+    return steelsize_opts,steelsize[0]
+
 @app.callback(
     [
         Output("attention", "children"),
@@ -309,7 +334,8 @@ def update_dropdown(X):
         Output("t41", "children"),
         Output("t42", "children"),
     ],
-    [Input("steelgrade_opts", "value"), Input("steelsize_opts", "value")],
+    [Input("steelgrade_opts", "value"),
+     Input("steelsize_opts", "value")],
 )
 def update_figure(grade, size):
     fig = make_subplots(
@@ -515,4 +541,3 @@ def update_figure(grade, size):
         test_table[4, 1],
         test_table[4, 2],
     )
-

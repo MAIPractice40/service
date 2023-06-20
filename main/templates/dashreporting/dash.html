@@ -14,23 +14,23 @@ Dash
         Контракты
         <i class="dropdown icon"></i>
         <div class="menu">
-        <div class="item">
-            <a href="/contract/create">Создать</a> 
+            <div class="item">
+                <a href="/contract/create">Создать</a>
+            </div>
+            <div class="item">
+                <a href="/contract/list">Список</a>
+            </div>
         </div>
-        <div class="item">
-            <a href="/contract/list">Список</a> 
-        </div>
-        </div>
-    </div>  
-</div>   
- 
+    </div>
+</div>
+
 <script>
     $('.ui.dropdown').dropdown();
 </script>
 
 
 <div class="active item">
-    <a href="/app1/" class="ui item" >Аналитика</a>
+    <a href="/app1/" class="ui item">Аналитика</a>
 </div>
 
 
@@ -47,7 +47,7 @@ Dash
     </a>
     {% endif %}
 
-    
+
 </div>
 {% endblock %}
 
@@ -60,9 +60,6 @@ Dash
 
 
 <div class="plotly" style="overflow: hidden;  height: 100%;">
-    {% plotly_app name="Stats" %}
+    {% plotly_app name="Stats" ratio=1 %}
 </div>
 {% endblock %}
-
-
-
