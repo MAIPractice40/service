@@ -6,6 +6,10 @@ form span {
     display: none;
 }
 
+input#id_date_of_contract::placeholder {
+    content: "das";
+}
+
 .background {
     height: 94.9vh;
     background-image: url(./main.jpg);
